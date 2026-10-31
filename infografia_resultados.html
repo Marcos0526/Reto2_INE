@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reto 2 INE | Riesgo territorial de abstención</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #dbe3ef;
+      --blue: #1769aa;
+      --teal: #0f9d8a;
+      --amber: #e59b20;
+      --orange: #e86f28;
+      --red: #c94b4b;
+      --paper: #f5f8fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1180px; margin: auto; padding: 28px; }
+    header {
+      color: white; padding: 38px; border-radius: 22px;
+      background: linear-gradient(125deg, #12355b, #1769aa 58%, #0f9d8a);
+      box-shadow: 0 12px 30px #12355b25;
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 4rem); line-height: 1; }
+    h2 { margin: 0 0 14px; font-size: 1.35rem; }
+    h3 { margin: 0 0 5px; font-size: 1rem; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-weight: 700; opacity: .8; }
+    .lead { max-width: 850px; margin: 18px 0 0; font-size: 1.15rem; }
+    .grid { display: grid; gap: 18px; margin: 18px 0; }
+    .cards { grid-template-columns: repeat(4, 1fr); }
+    .two { grid-template-columns: 1.1fr .9fr; }
+    .card, section {
+      background: white; border: 1px solid var(--line); border-radius: 16px;
+      padding: 22px; box-shadow: 0 5px 16px #1720330b;
+    }
+    .metric { font-size: 2rem; font-weight: 800; color: var(--blue); }
+    .label { color: var(--muted); font-size: .9rem; }
+    .note { color: var(--muted); font-size: .9rem; }
+    .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; align-items: stretch; }
+    .step { padding: 16px; border-radius: 12px; background: #edf5fb; border-top: 4px solid var(--blue); }
+    .step b { display: block; color: var(--blue); margin-bottom: 5px; }
+    .bar-row { display: grid; grid-template-columns: 110px 1fr 90px; gap: 10px; align-items: center; margin: 12px 0; }
+    .bar { height: 18px; border-radius: 999px; background: #edf1f7; overflow: hidden; }
+    .bar span { display: block; height: 100%; border-radius: inherit; }
+    .bajo span { background: var(--teal); }.medio span { background: var(--amber); }
+    .alto span { background: var(--orange); }.muy span { background: var(--red); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+    th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+    .scenario { border-left: 5px solid var(--blue); }
+    .scenario.x1 { border-color: var(--amber); }.scenario.x2 { border-color: var(--teal); }
+    .scenario .metric { color: var(--ink); }
+    .human-action {
+      margin-top: 12px; padding: 14px 16px; border-radius: 12px;
+      background: #f8fafc; border: 1px solid var(--line); color: var(--ink);
+    }
+    .human-action strong { display: block; margin-bottom: 4px; }
+    ul { padding-left: 20px; margin-bottom: 0; }
+    footer { color: var(--muted); font-size: .85rem; padding: 10px 4px 30px; }
+    @media (max-width: 850px) {
+      main { padding: 14px; }.cards, .two, .flow { grid-template-columns: 1fr 1fr; }
+      .bar-row { grid-template-columns: 92px 1fr 70px; }
+    }
+    @media (max-width: 560px) {
+      .cards, .two, .flow { grid-template-columns: 1fr; }
+      header { padding: 26px; }.bar-row { grid-template-columns: 82px 1fr 64px; font-size: .9rem; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Reto 2 · INE · Conteos Censales de Participación</div>
+    <h1>¿Dónde puede concentrarse la abstención?</h1>
+    <p class="lead">Un índice territorial de riesgo usa la historia electoral y la composición de cada sección para orientar acciones de participación. El resultado identifica prioridades; no predice la conducta individual.</p>
+  </header>
+
+  <div class="grid cards">
+    <div class="card"><div class="metric">68,651</div><div class="label">secciones 2024 con tasa válida</div></div>
+    <div class="card"><div class="metric">39.29%</div><div class="label">riesgo promedio estimado de abstención</div></div>
+    <div class="card"><div class="metric">8,353</div><div class="label">secciones en nivel alto o muy alto</div></div>
+    <div class="card"><div class="metric">32</div><div class="label">entidades federativas procesadas</div></div>
+  </div>
+
+  <section>
+    <h2>Qué se hizo</h2>
+    <div class="flow">
+      <div class="step"><b>1 · Fuente</b>Datos abiertos del INE: 32 archivos por elección en 2009, 2012, 2015, 2018, 2021 y 2024.</div>
+      <div class="step"><b>2 · Preparación</b>Validación de estructura, edades, sexo y conteos LN, SV, NV y NS.</div>
+      <div class="step"><b>3 · Unidad</b>Agregación por entidad, municipio y sección electoral.</div>
+      <div class="step"><b>4 · Modelo</b>Gradient Boosting regularizado con variables históricas 2009–2021 para explicar 2024.</div>
+      <div class="step"><b>5 · Acción</b>Índice 0–100, prioridades y dos escenarios de sensibilidad.</div>
+    </div>
+    <p class="note">La predicción se ajustó sobre la transformación logit de la abstención 2024. La evaluación reservó municipios completos para medir generalización territorial; se excluyeron secciones sin tasa 2024 válida.</p>
+  </section>
+
+  <div class="grid two">
+    <section>
+      <h2>Distribución del riesgo</h2>
+      <p class="note">Clasificación del índice: bajo &lt; 35, medio 35–50, alto 50–65 y muy alto &gt; 65.</p>
+      <div class="bar-row bajo"><b>Bajo</b><div class="bar"><span style="width: 33.31%"></span></div><strong>22,865</strong></div>
+      <div class="bar-row medio"><b>Medio</b><div class="bar"><span style="width: 54.57%"></span></div><strong>37,433</strong></div>
+      <div class="bar-row alto"><b>Alto</b><div class="bar"><span style="width: 11.75%"></span></div><strong>8,066</strong></div>
+      <div class="bar-row muy"><b>Muy alto</b><div class="bar"><span style="width: .42%"></span></div><strong>287</strong></div>
+      <table>
+        <thead><tr><th>Nivel</th><th>Lista nominal</th><th>Abstención esperada</th><th>Riesgo medio</th></tr></thead>
+        <tbody>
+          <tr><td>Bajo</td><td>28,570,890</td><td>8,480,919</td><td>29.34%</td></tr>
+          <tr><td>Medio</td><td>54,528,983</td><td>22,956,269</td><td>41.92%</td></tr>
+          <tr><td>Alto</td><td>13,183,858</td><td>7,171,935</td><td>54.26%</td></tr>
+          <tr><td>Muy alto</td><td>457,975</td><td>310,711</td><td>68.81%</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h2>¿El modelo mejora la referencia?</h2>
+      <p>La evaluación territorial separó 53,869 secciones para ajuste y 10,407 para prueba.</p>
+      <table>
+        <thead><tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Gradient Boosting histórico</strong></td><td><strong>0.0412</strong></td><td><strong>0.0588</strong></td><td><strong>0.6810</strong></td></tr>
+          <tr><td>Línea base: 2021</td><td>0.0900</td><td>0.1143</td><td>-0.2042</td></tr>
+        </tbody>
+      </table>
+      <p class="note">En prueba, el error absoluto medio se redujo aproximadamente 54.2% respecto a usar directamente la abstención de 2021.</p>
+      <h3>Variables utilizadas</h3>
+      <p class="note">Para cada sección se incorporan abstención y participación, proporción NS, tamaño de lista nominal, composición de edad (18–29, 30–59, 60+), composición por sexo y tipo de sección de 2009, 2012, 2015, 2018 y 2021.</p>
+    </section>
+  </div>
+
+  <section>
+    <h2>Entidades con mayor riesgo promedio</h2>
+    <table>
+      <thead><tr><th>Entidad</th><th>Riesgo promedio</th><th>Secciones alto/muy alto</th><th>Abstención esperada</th></tr></thead>
+      <tbody>
+        <tr><td>Baja California</td><td>49.28%</td><td>975</td><td>1,567,013</td></tr>
+        <tr><td>Chihuahua</td><td>46.70%</td><td>1,098</td><td>1,387,801</td></tr>
+        <tr><td>Durango</td><td>46.12%</td><td>393</td><td>650,213</td></tr>
+        <tr><td>Guanajuato</td><td>46.10%</td><td>1,088</td><td>2,267,545</td></tr>
+        <tr><td>Sonora</td><td>45.94%</td><td>494</td><td>1,061,628</td></tr>
+        <tr><td>Quintana Roo</td><td>45.81%</td><td>318</td><td>668,873</td></tr>
+      </tbody>
+    </table>
+    <p class="note">El ranking muestra riesgo promedio; la prioridad operativa también debe considerar el tamaño de la lista nominal y la capacidad local de intervención.</p>
+  </section>
+
+  <div class="grid two">
+    <section>
+      <h2>Escenarios de acción</h2>
+      <div class="card scenario"><h3>Sin intervención</h3><div class="metric">39.29%</div><div class="label">abstención promedio · 0 personas movilizadas</div></div>
+      <div class="card scenario x1"><h3>X1 · Acción informativa</h3><div class="metric">38.93%*</div><div class="label">reducción hipotética de 3 puntos en zonas alto/muy alto · 409,255 personas potencialmente movilizables</div></div>
+      <div class="human-action"><strong>En palabras sencillas:</strong> acercar información clara y neutral a la comunidad: recordar cuándo y dónde votar, explicar cómo ubicar la casilla y resolver dudas mediante mensajes, materiales impresos y difusión local.</div>
+      <div class="card scenario x2"><h3>X2 · Acción intensiva</h3><div class="metric">38.44%*</div><div class="label">reducción hipotética de 7 puntos en zonas alto/muy alto · 954,928 personas potencialmente movilizables</div></div>
+      <div class="human-action"><strong>En palabras sencillas:</strong> hacer un acompañamiento territorial más cercano: combinar información focalizada, visitas comunitarias, módulos de orientación y seguimiento de las dudas o barreras que dificultan acudir a votar.</div>
+      <p class="note">*Promedios del modelo posterior a la intervención hipotética, no resultados causales observados.</p>
+    </section>
+    <section>
+      <h2>Lectura ejecutiva</h2>
+      <ul>
+        <li>La mayoría de las secciones queda en nivel medio (37,433; 54.6%).</li>
+        <li>Las zonas alto/muy alto concentran 13.64 millones de registros de lista nominal y son el foco de los escenarios.</li>
+        <li>El modelo histórico aporta señal territorial adicional frente a la línea base 2021, pero no sustituye el diagnóstico local.</li>
+        <li>Las acciones deben diseñarse y evaluarse con medición real; X1 y X2 son sensibilidad, no promesas de impacto.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Alcances y límites</h2>
+    <div class="grid two">
+      <div><h3>Interpretación correcta</h3><p class="note">El índice es un riesgo de abstención a nivel de sección electoral. Sirve para priorizar territorios y recursos, no para etiquetar personas ni estimar probabilidades individuales.</p></div>
+      <div><h3>Precauciones</h3><p class="note">Las claves y fronteras de sección pueden cambiar entre elecciones; `NS` es un indicador de calidad y no voto emitido; la medición de una acción requiere diseño experimental o comparación con zonas similares.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Fuente: INE, Datos Abiertos, Conteos Censales de Participación (AELEC), elecciones 2009–2024.
+    Cálculos reproducibles en <code>notebooks/modelo_riesgo.ipynb</code>; resultados tabulares en
+    <code>resultado_modelo_riesgo_2024.csv</code> y <code>escenarios_modelo_riesgo_2024.csv</code>.
+  </footer>
+</main>
+</body>
+</html>

@@ -103,7 +103,11 @@ Reto2_INE/
 ├── README.md
 ├── notebooks/
 │   ├── exploracion_datos.ipynb
-│   └── preparacion_datos.ipynb
+│   ├── preparacion_datos.ipynb
+│   └── modelo_riesgo.ipynb
+├── infografia_resultados.html
+├── resultado_modelo_riesgo_2024.csv
+├── escenarios_modelo_riesgo_2024.csv
 └── DatosAbiertos_DECEyEC_ConteosCensales2024/   # ignorado en .gitignore
     ├── 01_descripcioncampos_conteoscensales2024.txt
     └── datosabiertos_deceyec_conteoscensales2024_*.csv
@@ -111,19 +115,40 @@ Reto2_INE/
 
 - `README.md`: documentación del reto, objetivos y estado del proyecto.
 - `notebooks/exploracion_datos.ipynb`: Fase 1 — metadatos, carga y calidad de los datos (ejecutado).
-- `notebooks/preparacion_datos.ipynb`: Fase 2 — limpieza y preparación de los datos (en ejecución).
+- `notebooks/preparacion_datos.ipynb`: Fase 2 — limpieza y preparación de los datos (ejecutado).
+- `notebooks/modelo_riesgo.ipynb`: Fase 3 — modelo territorial de riesgo, evaluación 2021→2024 y simulación de escenarios.
+- `infografia_resultados.html`: Fase 5 — infografía ejecutiva autocontenida con metodología, métricas, resultados y límites.
+- `resultado_modelo_riesgo_2024.csv`: índice de riesgo y prioridades por sección electoral.
+- `escenarios_modelo_riesgo_2024.csv`: comparación de escenarios hipotéticos de intervención.
 - `DatosAbiertos_DECEyEC_ConteosCensales2024/`: datos abiertos descargados del
   INE (tamaño considerable; se excluyen del control de versiones mediante
   `.gitignore`).
 
 ## ✅ Estado del proyecto
 
-- [ ] Definir preguntas de investigación y criterios de éxito.
-- [x] Explorar la información (Fase 1 — `notebooks/exploracion_datos.ipynb`). ✅ *(por Marcos)*
-- [x] Preparar los datos para el modelo (Fase 2 — `notebooks/preparacion_datos.ipynb`). ✅ *(por Marcos)*
-- [ ] Construir modelo de riesgo.
-- [ ] Simular escenarios de acción.
-- [ ] Generar esquema interpretable.
+- [x] Definir preguntas de investigación y criterios de éxito.
+- [x] Explorar la información (Fase 1 — `notebooks/exploracion_datos.ipynb`). 
+- [x] Preparar los datos para el modelo (Fase 2 — `notebooks/preparacion_datos.ipynb`).
+- [x] Construir modelo de riesgo (`notebooks/modelo_riesgo.ipynb`).
+- [x] Simular escenarios de acción.
+- [x] Generar esquema interpretable (`infografia_resultados.html`).
+
+## Resultados actualizados
+
+La ejecución del modelo con los datos disponibles produjo **64,276 secciones comparables**
+entre 2021 y 2024. El riesgo promedio estimado de abstención es **38.96%**; se
+clasificaron **7,091 secciones como alto** y **157 como muy alto**. En una
+evaluación territorial con municipios reservados, el Gradient Boosting obtuvo
+MAE **0.0481**, frente a **0.0866** de la línea base que usa directamente la
+abstención de 2021.
+
+Como análisis de sensibilidad, una reducción hipotética de 3 puntos en zonas de
+riesgo alto/muy alto representa **365,108 personas potencialmente movilizables**;
+una reducción de 7 puntos representa **851,920**. Estos escenarios no son
+efectos causales estimados y requieren validación mediante una intervención real.
+
+La infografía se puede abrir directamente en el navegador:
+[`infografia_resultados.html`](infografia_resultados.html).
 
 
 ---
