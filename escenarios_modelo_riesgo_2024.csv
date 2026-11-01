@@ -1,4 +1,4 @@
-escenario,reduccion_aplicada,personas_potencialmente_movilizables,abstencion_promedio_escenario,secciones_intervenidas
-Sin intervención,0 puntos,0.0,0.3935274306423591,0
-X1 informativa,3 puntos,477315.2100000004,0.38931438203418156,9641
-X2 intensiva,7 puntos,1113735.4900000002,0.3836969838899447,9641
+escenario,reduccion_aplicada,personas_potencialmente_movilizables,abstencion_promedio_escenario,secciones_intervenidas,personas_adicionales_max_sin_dato,personas_total_max_sin_dato
+Sin intervención,0 puntos,0.0,0.3935274306423591,0,0.0,0.0
+X1 informativa,3 puntos,477315.2100000004,0.38931438203418156,9641,47659.259999999995,524974.4700000004
+X2 intensiva,7 puntos,1113735.4900000002,0.3836969838899447,9641,111204.94000000002,1224940.4300000002
