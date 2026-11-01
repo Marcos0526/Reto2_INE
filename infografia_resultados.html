@@ -7,184 +7,276 @@
   <style>
     :root {
       --ink: #172033;
-      --muted: #64748b;
+      --muted: #5b6b82;
       --line: #dbe3ef;
       --blue: #1769aa;
       --teal: #0f9d8a;
-      --amber: #e59b20;
+      --amber: #d98a12;
       --orange: #e86f28;
       --red: #c94b4b;
       --paper: #f5f8fc;
+      --soft: #eef5fb;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       color: var(--ink);
       background: var(--paper);
-      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     main { max-width: 1180px; margin: auto; padding: 28px; }
     header {
-      color: white; padding: 38px; border-radius: 22px;
+      color: white; padding: 40px; border-radius: 22px;
       background: linear-gradient(125deg, #12355b, #1769aa 58%, #0f9d8a);
       box-shadow: 0 12px 30px #12355b25;
     }
-    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 4rem); line-height: 1; }
+    h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 4rem); line-height: 1.02; }
     h2 { margin: 0 0 14px; font-size: 1.35rem; }
-    h3 { margin: 0 0 5px; font-size: 1rem; }
-    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-weight: 700; opacity: .8; }
-    .lead { max-width: 850px; margin: 18px 0 0; font-size: 1.15rem; }
+    h3 { margin: 0 0 6px; font-size: 1rem; }
+    p { margin: 0 0 10px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-weight: 700; opacity: .85; font-size: .82rem; }
+    .lead { max-width: 880px; margin: 18px 0 0; font-size: 1.18rem; }
     .grid { display: grid; gap: 18px; margin: 18px 0; }
     .cards { grid-template-columns: repeat(4, 1fr); }
-    .two { grid-template-columns: 1.1fr .9fr; }
+    .two { grid-template-columns: 1.05fr .95fr; }
+    .three { grid-template-columns: repeat(3, 1fr); }
     .card, section {
       background: white; border: 1px solid var(--line); border-radius: 16px;
       padding: 22px; box-shadow: 0 5px 16px #1720330b;
     }
-    .metric { font-size: 2rem; font-weight: 800; color: var(--blue); }
-    .label { color: var(--muted); font-size: .9rem; }
+    .card.plain { box-shadow: none; background: #fbfdff; }
+    .metric { font-size: 2rem; font-weight: 800; color: var(--blue); line-height: 1.1; }
+    .label { color: var(--muted); font-size: .92rem; }
     .note { color: var(--muted); font-size: .9rem; }
+    .tiny { color: var(--muted); font-size: .82rem; }
     .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; align-items: stretch; }
-    .step { padding: 16px; border-radius: 12px; background: #edf5fb; border-top: 4px solid var(--blue); }
+    .step { padding: 16px; border-radius: 12px; background: var(--soft); border-top: 4px solid var(--blue); }
     .step b { display: block; color: var(--blue); margin-bottom: 5px; }
-    .bar-row { display: grid; grid-template-columns: 110px 1fr 90px; gap: 10px; align-items: center; margin: 12px 0; }
+    .bar-row { display: grid; grid-template-columns: 96px 1fr 92px; gap: 10px; align-items: center; margin: 12px 0; }
     .bar { height: 18px; border-radius: 999px; background: #edf1f7; overflow: hidden; }
     .bar span { display: block; height: 100%; border-radius: inherit; }
     .bajo span { background: var(--teal); }.medio span { background: var(--amber); }
     .alto span { background: var(--orange); }.muy span { background: var(--red); }
-    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
-    th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; }
-    th { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
-    .scenario { border-left: 5px solid var(--blue); }
+    table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+    .scenario { border-left: 5px solid var(--blue); margin-bottom: 12px; }
     .scenario.x1 { border-color: var(--amber); }.scenario.x2 { border-color: var(--teal); }
-    .scenario .metric { color: var(--ink); }
+    .scenario .metric { color: var(--ink); font-size: 1.7rem; }
     .human-action {
-      margin-top: 12px; padding: 14px 16px; border-radius: 12px;
-      background: #f8fafc; border: 1px solid var(--line); color: var(--ink);
+      margin: 8px 0 0; padding: 12px 14px; border-radius: 12px;
+      background: #f8fafc; border: 1px solid var(--line); color: var(--ink); font-size: .93rem;
     }
-    .human-action strong { display: block; margin-bottom: 4px; }
-    ul { padding-left: 20px; margin-bottom: 0; }
-    footer { color: var(--muted); font-size: .85rem; padding: 10px 4px 30px; }
+    .human-action strong { display: block; margin-bottom: 3px; }
+    .callout { padding: 16px 18px; border-radius: 14px; background: var(--soft); border: 1px solid #cfe2f3; }
+    .callout.warn { background: #fff8ea; border-color: #f0d39a; }
+    .callout.good { background: #eefaf7; border-color: #b9e6dc; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .76rem; font-weight: 700; background: #e8f1fa; color: var(--blue); }
+    .badge.warn { background: #fff0d4; color: #8a5a00; }
+    ul { padding-left: 20px; margin: 8px 0 0; }
+    li { margin-bottom: 6px; }
+    dl { display: grid; grid-template-columns: 190px 1fr; gap: 8px 16px; margin: 0; }
+    dt { font-weight: 700; }
+    dd { margin: 0; color: var(--muted); }
+    footer { color: var(--muted); font-size: .85rem; padding: 12px 4px 30px; }
+    code { background: #eef2f7; padding: 1px 5px; border-radius: 5px; font-size: .88em; }
     @media (max-width: 850px) {
-      main { padding: 14px; }.cards, .two, .flow { grid-template-columns: 1fr 1fr; }
-      .bar-row { grid-template-columns: 92px 1fr 70px; }
+      main { padding: 14px; }
+      .cards, .two, .three, .flow { grid-template-columns: 1fr 1fr; }
+      .bar-row { grid-template-columns: 88px 1fr 76px; }
+      dl { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
-      .cards, .two, .flow { grid-template-columns: 1fr; }
-      header { padding: 26px; }.bar-row { grid-template-columns: 82px 1fr 64px; font-size: .9rem; }
+      .cards, .two, .three, .flow { grid-template-columns: 1fr; }
+      header { padding: 26px; }
+      .bar-row { grid-template-columns: 78px 1fr 68px; font-size: .88rem; }
     }
   </style>
 </head>
 <body>
 <main>
   <header>
-    <div class="eyebrow">Reto 2 · INE · Conteos Censales de Participación</div>
-    <h1>¿Dónde puede concentrarse la abstención?</h1>
-    <p class="lead">Un índice territorial de riesgo usa la historia electoral y la composición de cada sección para orientar acciones de participación. El resultado identifica prioridades; no predice la conducta individual.</p>
+    <div class="eyebrow">Reto 2 · INE · Participación ciudadana</div>
+    <h1>¿Dónde hay más riesgo de que la gente no vote?</h1>
+    <p class="lead">Este estudio usa los datos de las elecciones de 2009 a 2024 para identificar las secciones donde la abstención podría ser mayor y ayudar a decidir dónde actuar primero. No predice personas: describe territorios.</p>
   </header>
 
+  <section>
+    <h2>Cómo leer esta infografía</h2>
+    <div class="grid three">
+      <div class="card plain">
+        <h3>Sección electoral</h3>
+        <p class="note">Es un grupo de casillas. Es la unidad territorial más pequeña con datos públicos de participación.</p>
+      </div>
+      <div class="card plain">
+        <h3>Abstención</h3>
+        <p class="note">Personas registradas en la lista nominal que no votaron. No es lo mismo que “no estar registrado”.</p>
+      </div>
+      <div class="card plain">
+        <h3>Índice de riesgo</h3>
+        <p class="note">Va de 0 a 100. Más alto significa mayor propensión observada a la abstención, no una probabilidad individual.</p>
+      </div>
+    </div>
+    <p class="tiny">Los intervalos y los rangos de ranking muestran el margen de error. No son certezas ni promesas de impacto.</p>
+  </section>
+
   <div class="grid cards">
-    <div class="card"><div class="metric">68,651</div><div class="label">secciones 2024 con tasa válida</div></div>
-    <div class="card"><div class="metric">39.29%</div><div class="label">riesgo promedio estimado de abstención</div></div>
-    <div class="card"><div class="metric">8,353</div><div class="label">secciones en nivel alto o muy alto</div></div>
-    <div class="card"><div class="metric">32</div><div class="label">entidades federativas procesadas</div></div>
+    <div class="card"><div class="metric">70,751</div><div class="label">secciones electorales en 2024</div></div>
+    <div class="card"><div class="metric">39.35%</div><div class="label">riesgo promedio entre secciones (promedio simple). La abstención agregada de 2024 fue 40.33%</div></div>
+    <div class="card"><div class="metric">9,641</div><div class="label">secciones en riesgo alto o muy alto</div></div>
+    <div class="card"><div class="metric">477,315</div><div class="label">personas potencialmente movilizables con la acción X1 (cota mecánica)</div></div>
   </div>
 
   <section>
-    <h2>Qué se hizo</h2>
+    <h2>Qué se hizo, en 5 pasos</h2>
     <div class="flow">
-      <div class="step"><b>1 · Fuente</b>Datos abiertos del INE: 32 archivos por elección en 2009, 2012, 2015, 2018, 2021 y 2024.</div>
-      <div class="step"><b>2 · Preparación</b>Validación de estructura, edades, sexo y conteos LN, SV, NV y NS.</div>
-      <div class="step"><b>3 · Unidad</b>Agregación por entidad, municipio y sección electoral.</div>
-      <div class="step"><b>4 · Modelo</b>Gradient Boosting regularizado con variables históricas 2009–2021 para explicar 2024.</div>
-      <div class="step"><b>5 · Acción</b>Índice 0–100, prioridades y dos escenarios de sensibilidad.</div>
+      <div class="step"><b>1 · Datos</b>Seis elecciones (2009, 2012, 2015, 2018, 2021 y 2024) con 32 archivos por año.</div>
+      <div class="step"><b>2 · Limpieza</b>Se revisaron edades, sexo, lista nominal, votos y registros no especificados.</div>
+      <div class="step"><b>3 · Territorio</b>Se agregó la información por entidad, municipio y sección electoral.</div>
+      <div class="step"><b>4 · Modelo</b>Se aprendió de la historia 2009–2021 y del contexto vecino para estimar la abstención de 2024.</div>
+      <div class="step"><b>5 · Acción</b>Se construyó un índice, un mapa de prioridades y dos escenarios de sensibilidad.</div>
     </div>
-    <p class="note">La predicción se ajustó sobre la transformación logit de la abstención 2024. La evaluación reservó municipios completos para medir generalización territorial; se excluyeron secciones sin tasa 2024 válida.</p>
+    <p class="note">El modelo usa solo información hasta 2021 para estimar 2024. Por eso es un pronóstico retrospectivo (<em>nowcast</em>): sirve para priorizar territorios, no para prometer resultados futuros.</p>
   </section>
 
   <div class="grid two">
     <section>
       <h2>Distribución del riesgo</h2>
       <p class="note">Clasificación del índice: bajo &lt; 35, medio 35–50, alto 50–65 y muy alto &gt; 65.</p>
-      <div class="bar-row bajo"><b>Bajo</b><div class="bar"><span style="width: 33.31%"></span></div><strong>22,865</strong></div>
-      <div class="bar-row medio"><b>Medio</b><div class="bar"><span style="width: 54.57%"></span></div><strong>37,433</strong></div>
-      <div class="bar-row alto"><b>Alto</b><div class="bar"><span style="width: 11.75%"></span></div><strong>8,066</strong></div>
-      <div class="bar-row muy"><b>Muy alto</b><div class="bar"><span style="width: .42%"></span></div><strong>287</strong></div>
+      <div class="bar-row bajo"><b>Bajo</b><div class="bar"><span style="width: 33.47%"></span></div><strong>22,979</strong></div>
+      <div class="bar-row medio"><b>Medio</b><div class="bar"><span style="width: 52.48%"></span></div><strong>36,031</strong></div>
+      <div class="bar-row alto"><b>Alto</b><div class="bar"><span style="width: 13.61%"></span></div><strong>9,344</strong></div>
+      <div class="bar-row muy"><b>Muy alto</b><div class="bar"><span style="width: .43%"></span></div><strong>297</strong></div>
       <table>
-        <thead><tr><th>Nivel</th><th>Lista nominal</th><th>Abstención esperada</th><th>Riesgo medio</th></tr></thead>
+        <thead><tr><th>Nivel</th><th>Secciones</th><th>Qué significa</th></tr></thead>
         <tbody>
-          <tr><td>Bajo</td><td>28,570,890</td><td>8,480,919</td><td>29.34%</td></tr>
-          <tr><td>Medio</td><td>54,528,983</td><td>22,956,269</td><td>41.92%</td></tr>
-          <tr><td>Alto</td><td>13,183,858</td><td>7,171,935</td><td>54.26%</td></tr>
-          <tr><td>Muy alto</td><td>457,975</td><td>310,711</td><td>68.81%</td></tr>
+          <tr><td>Bajo</td><td>22,979</td><td>Menor propensión observada; no significa que no requiera atención.</td></tr>
+          <tr><td>Medio</td><td>36,031</td><td>La mayoría de las secciones; aquí hay margen de mejora.</td></tr>
+          <tr><td>Alto</td><td>9,344</td><td>Prioridad operativa para acciones de participación.</td></tr>
+          <tr><td>Muy alto</td><td>297</td><td>Foco inmediato y diagnóstico local fino.</td></tr>
+          <tr><td>Sin dato</td><td>2,100</td><td>No tienen tasa válida 2024; se reportan aparte.</td></tr>
         </tbody>
       </table>
     </section>
+
     <section>
-      <h2>¿El modelo mejora la referencia?</h2>
-      <p>La evaluación territorial separó 53,869 secciones para ajuste y 10,407 para prueba.</p>
+      <h2>¿Qué tan confiable es?</h2>
+      <p>Se hicieron dos pruebas distintas. La territorial reserva municipios completos que el modelo no vio. La temporal entrena con datos hasta 2018 y le pide predecir 2021.</p>
       <table>
-        <thead><tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead>
+        <thead><tr><th>Prueba</th><th>Error promedio (MAE)</th><th>Referencia simple</th></tr></thead>
         <tbody>
-          <tr><td><strong>Gradient Boosting histórico</strong></td><td><strong>0.0412</strong></td><td><strong>0.0588</strong></td><td><strong>0.6810</strong></td></tr>
-          <tr><td>Línea base: 2021</td><td>0.0900</td><td>0.1143</td><td>-0.2042</td></tr>
+          <tr><td><strong>Municipios no vistos de 2024</strong></td><td><strong>3.2 puntos porcentuales</strong></td><td>9.7 puntos porcentuales (usar 2021)</td></tr>
+          <tr><td><strong>Otro año: 2021</strong></td><td><strong>7.2 puntos porcentuales</strong></td><td>10.0 puntos porcentuales (usar 2018)</td></tr>
         </tbody>
       </table>
-      <p class="note">En prueba, el error absoluto medio se redujo aproximadamente 54.2% respecto a usar directamente la abstención de 2021.</p>
-      <h3>Variables utilizadas</h3>
-      <p class="note">Para cada sección se incorporan abstención y participación, proporción NS, tamaño de lista nominal, composición de edad (18–29, 30–59, 60+), composición por sexo y tipo de sección de 2009, 2012, 2015, 2018 y 2021.</p>
+      <p class="note">La prueba temporal es más dura: 2021 fue un año atípico por COVID-19 y el modelo se enfrenta a un año completo no visto. Aun así, reduce el error de la referencia en 27.9%. No es una bola de cristal para 2027.</p>
+      <div class="callout good">
+        <strong>En palabras sencillas:</strong> el modelo acierta mejor que “repetir el dato del año anterior”, pero su error crece cuando cambia el contexto. Úsalo para ordenar prioridades, no para fijar metas exactas.
+      </div>
     </section>
   </div>
 
   <section>
+    <h2>El margen de error importa</h2>
+    <div class="grid two">
+      <div class="callout">
+        <h3>Intervalo del 80%</h3>
+        <p>Cada sección tiene un rango probable. En la prueba, <strong>8 de cada 10 secciones</strong> cayeron dentro de su rango. El ancho medio es de <strong>10.1 puntos porcentuales</strong>.</p>
+      </div>
+      <div class="callout">
+        <h3>Ejemplo de lectura</h3>
+        <p>Si una sección tiene un índice de <strong>45%</strong>, su rango probable puede ir de <strong>40% a 50%</strong>. La diferencia entre dos secciones cercanas puede ser ruido, no una diferencia real.</p>
+      </div>
+    </div>
+    <p class="note">El intervalo mide incertidumbre de la predicción. No es un intervalo de confianza sobre el efecto de una política ni sobre la conducta de una persona.</p>
+  </section>
+
+  <section>
     <h2>Entidades con mayor riesgo promedio</h2>
     <table>
-      <thead><tr><th>Entidad</th><th>Riesgo promedio</th><th>Secciones alto/muy alto</th><th>Abstención esperada</th></tr></thead>
+      <thead><tr><th>Entidad</th><th>Riesgo promedio</th><th>Secciones alto/muy alto</th><th>Lectura del ranking</th></tr></thead>
       <tbody>
-        <tr><td>Baja California</td><td>49.28%</td><td>975</td><td>1,567,013</td></tr>
-        <tr><td>Chihuahua</td><td>46.70%</td><td>1,098</td><td>1,387,801</td></tr>
-        <tr><td>Durango</td><td>46.12%</td><td>393</td><td>650,213</td></tr>
-        <tr><td>Guanajuato</td><td>46.10%</td><td>1,088</td><td>2,267,545</td></tr>
-        <tr><td>Sonora</td><td>45.94%</td><td>494</td><td>1,061,628</td></tr>
-        <tr><td>Quintana Roo</td><td>45.81%</td><td>318</td><td>668,873</td></tr>
+        <tr><td>Baja California</td><td>51.66%</td><td>1,369</td><td>1.º estable</td></tr>
+        <tr><td>Sonora</td><td>47.29%</td><td>629</td><td>2.º–3.º</td></tr>
+        <tr><td>Chihuahua</td><td>46.75%</td><td>1,168</td><td>2.º–5.º · 5.8% sin dato</td></tr>
+        <tr><td>Durango</td><td>45.52%</td><td>352</td><td>4.º–7.º</td></tr>
+        <tr><td>Baja California Sur</td><td>45.21%</td><td>155</td><td>3.º–6.º</td></tr>
+        <tr><td>Michoacán</td><td>44.91%</td><td>745</td><td>5.º–8.º</td></tr>
       </tbody>
     </table>
-    <p class="note">El ranking muestra riesgo promedio; la prioridad operativa también debe considerar el tamaño de la lista nominal y la capacidad local de intervención.</p>
+    <p class="note">El ranking general es estable: el orden coincide en 98.5% entre el promedio simple y el ponderado por lista nominal. Aun así, no es una lista rígida. <strong>Sinaloa</strong> puede pasar del lugar 4 al 12 según cómo se traten sus secciones sin dato (6.2% de su lista nominal). Chihuahua (5.8%) y Coahuila (5.8%) también superan el 5% y deben revisarse antes de concluir.</p>
   </section>
 
   <div class="grid two">
     <section>
       <h2>Escenarios de acción</h2>
-      <div class="card scenario"><h3>Sin intervención</h3><div class="metric">39.29%</div><div class="label">abstención promedio · 0 personas movilizadas</div></div>
-      <div class="card scenario x1"><h3>X1 · Acción informativa</h3><div class="metric">38.93%*</div><div class="label">reducción hipotética de 3 puntos en zonas alto/muy alto · 409,255 personas potencialmente movilizables</div></div>
-      <div class="human-action"><strong>En palabras sencillas:</strong> acercar información clara y neutral a la comunidad: recordar cuándo y dónde votar, explicar cómo ubicar la casilla y resolver dudas mediante mensajes, materiales impresos y difusión local.</div>
-      <div class="card scenario x2"><h3>X2 · Acción intensiva</h3><div class="metric">38.44%*</div><div class="label">reducción hipotética de 7 puntos en zonas alto/muy alto · 954,928 personas potencialmente movilizables</div></div>
-      <div class="human-action"><strong>En palabras sencillas:</strong> hacer un acompañamiento territorial más cercano: combinar información focalizada, visitas comunitarias, módulos de orientación y seguimiento de las dudas o barreras que dificultan acudir a votar.</div>
-      <p class="note">*Promedios del modelo posterior a la intervención hipotética, no resultados causales observados.</p>
+      <div class="card scenario">
+        <h3>Si no se hace nada</h3>
+        <div class="metric">39.35%</div>
+        <div class="label">abstención promedio estimada · 0 personas movilizadas</div>
+      </div>
+      <div class="card scenario x1">
+        <h3>X1 · Acción informativa</h3>
+        <div class="metric">38.93%*</div>
+        <div class="label">reducción hipotética de 3 puntos en zonas alto/muy alto · 477,315 personas potencialmente movilizables</div>
+      </div>
+      <div class="human-action"><strong>En palabras sencillas:</strong> acercar información clara y neutral: recordar cuándo y dónde votar, explicar cómo ubicar la casilla y resolver dudas con mensajes, materiales impresos y difusión local.</div>
+      <div class="card scenario x2">
+        <h3>X2 · Acción intensiva</h3>
+        <div class="metric">38.37%*</div>
+        <div class="label">reducción hipotética de 7 puntos en zonas alto/muy alto · 1,113,735 personas potencialmente movilizables</div>
+      </div>
+      <div class="human-action"><strong>En palabras sencillas:</strong> acompañamiento territorial más cercano: información focalizada, visitas comunitarias, módulos de orientación y seguimiento de las barreras que dificultan votar.</div>
+      <p class="note">*Promedios del modelo después de la intervención hipotética, no resultados causales observados. Las personas son un techo aritmético (reducción de tasa × lista nominal), no un conteo de personas contactables; tampoco incluye costos. Las 2,100 secciones sin dato no están incluidas: si se sumaran, el máximo sería 524,974 (X1) y 1,224,940 (X2).</p>
     </section>
+
     <section>
-      <h2>Lectura ejecutiva</h2>
+      <h2>Recomendaciones</h2>
       <ul>
-        <li>La mayoría de las secciones queda en nivel medio (37,433; 54.6%).</li>
-        <li>Las zonas alto/muy alto concentran 13.64 millones de registros de lista nominal y son el foco de los escenarios.</li>
-        <li>El modelo histórico aporta señal territorial adicional frente a la línea base 2021, pero no sustituye el diagnóstico local.</li>
-        <li>Las acciones deben diseñarse y evaluarse con medición real; X1 y X2 son sensibilidad, no promesas de impacto.</li>
+        <li><strong>Priorizar las 9,641 secciones alto/muy alto</strong>, empezando por las que concentran más lista nominal y tienen cobertura de datos suficiente.</li>
+        <li><strong>Usar X1 donde el riesgo es alto y la barrera principal es informativa;</strong> reservar X2 para zonas de riesgo muy alto con barreras de acceso o acompañamiento.</li>
+        <li><strong>Revisar primero Sinaloa, Chihuahua y Coahuila:</strong> su ranking puede moverse por las secciones sin dato.</li>
+        <li><strong>Medir antes y después</strong> con un grupo de comparación. Sin medición real, X1 y X2 son escenarios, no impactos.</li>
+        <li><strong>Actualizar el modelo con 2024</strong> antes de usarlo para una elección futura; la versión actual es una calibración territorial de 2024.</li>
       </ul>
     </section>
   </div>
 
   <section>
-    <h2>Alcances y límites</h2>
+    <h2>Qué NO dice este estudio</h2>
     <div class="grid two">
-      <div><h3>Interpretación correcta</h3><p class="note">El índice es un riesgo de abstención a nivel de sección electoral. Sirve para priorizar territorios y recursos, no para etiquetar personas ni estimar probabilidades individuales.</p></div>
-      <div><h3>Precauciones</h3><p class="note">Las claves y fronteras de sección pueden cambiar entre elecciones; `NS` es un indicador de calidad y no voto emitido; la medición de una acción requiere diseño experimental o comparación con zonas similares.</p></div>
+      <div class="callout warn">
+        <ul>
+          <li>No predice si una persona concreta votará o no.</li>
+          <li>No prueba que una acción cause el cambio; los escenarios son sensibilidad.</li>
+          <li>No es una proyección a 2027 ni una promesa de participación.</li>
+        </ul>
+      </div>
+      <div class="callout warn">
+        <ul>
+          <li>No reemplaza el diagnóstico local ni el trabajo territorial.</li>
+          <li>No corrige por completo los cambios de fronteras y claves de sección.</li>
+          <li>Los datos de campaña no mejoraron el modelo con este diseño; eso no significa que las campañas no importen.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
+  <section>
+    <h2>Glosario mínimo</h2>
+    <dl>
+      <dt>Sección electoral</dt><dd>Unidad territorial mínima con datos de participación; agrupa casillas.</dd>
+      <dt>Lista nominal</dt><dd>Personas registradas para votar en una sección.</dd>
+      <dt>Abstención</dt><dd>Proporción de la lista nominal que no votó.</dd>
+      <dt>Índice de riesgo</dt><dd>Puntaje de 0 a 100 que ordena secciones por propensión observada a la abstención.</dd>
+      <dt>MAE</dt><dd>Error absoluto medio: en promedio, cuántos puntos porcentuales se equivoca la predicción.</dd>
+      <dt>Intervalo del 80%</dt><dd>Rango probable de la abstención de una sección; en la prueba cubrió 8 de cada 10 casos.</dd>
+      <dt>Nowcast</dt><dd>Pronóstico retrospectivo: se estima un año que ya ocurrió para validar el método, no una elección futura.</dd>
+    </dl>
+  </section>
+
   <footer>
-    Fuente: INE, Datos Abiertos, Conteos Censales de Participación (AELEC), elecciones 2009–2024.
-    Cálculos reproducibles en <code>notebooks/modelo_riesgo.ipynb</code>; resultados tabulares en
-    <code>resultado_modelo_riesgo_2024.csv</code> y <code>escenarios_modelo_riesgo_2024.csv</code>.
+    Fuente: INE, Datos Abiertos, Conteos Censales de Participación (AELEC), elecciones 2009–2024; eventos y gastos de campaña del Sistema Integral de Fiscalización (SIF). Cálculos reproducibles en <code>src/entrenar_modelo.py</code>; resultados tabulares en <code>resultado_modelo_riesgo_2024.csv</code>, <code>escenarios_modelo_riesgo_2024.csv</code> y <code>DatosAbiertos/processed/</code>.
   </footer>
 </main>
 </body>

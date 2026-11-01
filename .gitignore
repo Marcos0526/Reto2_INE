@@ -1,2 +1,17 @@
 # Datos abiertos descargados del INE (no versionar)
 DatosAbiertos*/
+
+# Artefactos de Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Descargas parciales y temporales
+*.part
+.DS_Store
