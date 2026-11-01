@@ -42,6 +42,12 @@ de sensibilidad, **no efectos causales estimados**.
 3. Si se aplica una acción X, ¿cuántas personas podrían movilizarse y qué
    acción tiene más sentido priorizar?
 
+> **Alcance temporal:** el modelo es un pronóstico supervisado: usa únicamente
+> información hasta 2021 para predecir la abstención de 2024. Como 2024 ya
+> ocurrió, las puntuaciones finales son un pronóstico retrospectivo
+> (*nowcast*) y no una proyección a 2027. Para prospectiva se actualizan las
+> variables con 2024 y se reestima el modelo.
+
 ---
 
 ## 📊 Datos
@@ -66,7 +72,7 @@ de sensibilidad, **no efectos causales estimados**.
 | Conteos Censales de Participación | 2009, 2012, 2015, 2018, 2021, 2024 | 32 CSV por año (192) | ~54.9 millones de filas; ~3.5 GB | Base del panel seccional |
 | Conteos de prisión preventiva | 2024 | 1 CSV | 1 archivo | Cobertura especial |
 | Conteos de voto anticipado | 2024 | 1 CSV | 1 archivo | Cobertura especial |
-| Conteos del Poder Judicial | 2024–2025 | 32 CSV | ~602 MB | Análisis exploratorio adicional |
+| Conteos del Poder Judicial | 2024–2025 | 31 CSV | ~602 MB | Análisis exploratorio adicional |
 | Manual de Conteos Censales | 2009–2024 | 1 PDF | 2.6 MB | Metodología y diccionario |
 | Agenda de eventos federales | 2024 | 1 CSV | 354,811 filas | Variable de campaña |
 | Agenda de eventos locales | 2024 | 2 CSV | 1,304,225 filas | Variable de campaña |
@@ -184,6 +190,11 @@ del logit.
 - Métricas en escala de probabilidad: MAE, RMSE y R².
 - Línea base: usar directamente la abstención de 2021 (mediana si falta).
 
+Las métricas reportadas son **fuera de muestra**. Las puntuaciones finales se
+generan reajustando el modelo con todas las secciones modelables; por tanto, son
+ajustadas (*in-sample*) y deben leerse como índice de priorización, no como una
+segunda validación.
+
 ### Modelos comparados
 
 | Modelo | Variables |
@@ -231,6 +242,10 @@ Las entidades con mayor riesgo promedio son **Baja California (51.66%)**,
 California Sur (45.21%)** y **Michoacán (44.91%)**. El ranking debe combinarse
 con el tamaño de la lista nominal y la capacidad local de intervención.
 
+> La abstención agregada de 2024 (40.33%) pondera por votos; el riesgo promedio
+> del índice (39.35%) es el promedio simple entre secciones. Son métricas
+> distintas y no deben compararse como si fueran la misma.
+
 ### Escenarios de acción
 
 | Escenario | Reducción hipotética | Abstención promedio | Personas potencialmente movilizables |
@@ -246,6 +261,10 @@ con el tamaño de la lista nominal y la capacidad local de intervención.
 
 Ambos escenarios son **sensibilidad**, no impacto causal. Una intervención real
 requiere medición antes/después, grupo de comparación o prueba controlada.
+
+La cifra de personas es una **cota mecánica** (`reducción de la tasa × lista
+nominal`). No estima cuántas personas son contactables, ni la respuesta
+diferencial por sección, ni el costo de la intervención.
 
 ### Importancia de variables
 
