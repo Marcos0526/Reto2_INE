@@ -85,8 +85,8 @@
 
   <div class="grid cards">
     <div class="card"><div class="metric">68,651</div><div class="label">secciones 2024 con tasa válida</div></div>
-    <div class="card"><div class="metric">39.29%</div><div class="label">riesgo promedio estimado de abstención</div></div>
-    <div class="card"><div class="metric">8,353</div><div class="label">secciones en nivel alto o muy alto</div></div>
+    <div class="card"><div class="metric">39.35%</div><div class="label">riesgo promedio estimado de abstención</div></div>
+    <div class="card"><div class="metric">9,641</div><div class="label">secciones en nivel alto o muy alto</div></div>
     <div class="card"><div class="metric">32</div><div class="label">entidades federativas procesadas</div></div>
   </div>
 
@@ -96,43 +96,45 @@
       <div class="step"><b>1 · Fuente</b>Datos abiertos del INE: 32 archivos por elección en 2009, 2012, 2015, 2018, 2021 y 2024.</div>
       <div class="step"><b>2 · Preparación</b>Validación de estructura, edades, sexo y conteos LN, SV, NV y NS.</div>
       <div class="step"><b>3 · Unidad</b>Agregación por entidad, municipio y sección electoral.</div>
-      <div class="step"><b>4 · Modelo</b>Gradient Boosting regularizado con variables históricas 2009–2021 para explicar 2024.</div>
+      <div class="step"><b>4 · Modelo</b>Gradient Boosting con historia 2009–2021 y contexto espacial municipal/estatal para explicar 2024.</div>
       <div class="step"><b>5 · Acción</b>Índice 0–100, prioridades y dos escenarios de sensibilidad.</div>
     </div>
-    <p class="note">La predicción se ajustó sobre la transformación logit de la abstención 2024. La evaluación reservó municipios completos para medir generalización territorial; se excluyeron secciones sin tasa 2024 válida.</p>
+    <p class="note">La predicción se ajustó sobre la transformación logit de la abstención 2024. La evaluación reservó municipios completos con tres particiones y reportó media y desviación estándar; las secciones sin tasa 2024 válida se marcan como «Sin dato».</p>
   </section>
 
   <div class="grid two">
     <section>
       <h2>Distribución del riesgo</h2>
       <p class="note">Clasificación del índice: bajo &lt; 35, medio 35–50, alto 50–65 y muy alto &gt; 65.</p>
-      <div class="bar-row bajo"><b>Bajo</b><div class="bar"><span style="width: 33.31%"></span></div><strong>22,865</strong></div>
-      <div class="bar-row medio"><b>Medio</b><div class="bar"><span style="width: 54.57%"></span></div><strong>37,433</strong></div>
-      <div class="bar-row alto"><b>Alto</b><div class="bar"><span style="width: 11.75%"></span></div><strong>8,066</strong></div>
-      <div class="bar-row muy"><b>Muy alto</b><div class="bar"><span style="width: .42%"></span></div><strong>287</strong></div>
+      <div class="bar-row bajo"><b>Bajo</b><div class="bar"><span style="width: 33.47%"></span></div><strong>22,979</strong></div>
+      <div class="bar-row medio"><b>Medio</b><div class="bar"><span style="width: 52.48%"></span></div><strong>36,031</strong></div>
+      <div class="bar-row alto"><b>Alto</b><div class="bar"><span style="width: 13.61%"></span></div><strong>9,344</strong></div>
+      <div class="bar-row muy"><b>Muy alto</b><div class="bar"><span style="width: .43%"></span></div><strong>297</strong></div>
       <table>
         <thead><tr><th>Nivel</th><th>Lista nominal</th><th>Abstención esperada</th><th>Riesgo medio</th></tr></thead>
         <tbody>
-          <tr><td>Bajo</td><td>28,570,890</td><td>8,480,919</td><td>29.34%</td></tr>
-          <tr><td>Medio</td><td>54,528,983</td><td>22,956,269</td><td>41.92%</td></tr>
-          <tr><td>Alto</td><td>13,183,858</td><td>7,171,935</td><td>54.26%</td></tr>
-          <tr><td>Muy alto</td><td>457,975</td><td>310,711</td><td>68.81%</td></tr>
+          <tr><td>Bajo</td><td>29,014,613</td><td>8,464,047</td><td>28.86%</td></tr>
+          <tr><td>Medio</td><td>51,816,586</td><td>21,797,617</td><td>41.92%</td></tr>
+          <tr><td>Alto</td><td>15,422,746</td><td>8,407,422</td><td>54.31%</td></tr>
+          <tr><td>Muy alto</td><td>487,761</td><td>333,314</td><td>69.17%</td></tr>
+          <tr><td>Sin dato</td><td>1,588,642</td><td>—</td><td>—</td></tr>
         </tbody>
       </table>
     </section>
     <section>
       <h2>¿El modelo mejora la referencia?</h2>
-      <p>La evaluación territorial separó 53,869 secciones para ajuste y 10,407 para prueba.</p>
+      <p>La evaluación territorial reservó municipios completos en tres particiones (semillas 42, 7 y 2024). En promedio, ~52,617 secciones se usaron para ajuste y ~16,034 para prueba.</p>
       <table>
         <thead><tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead>
         <tbody>
-          <tr><td><strong>Gradient Boosting histórico</strong></td><td><strong>0.0412</strong></td><td><strong>0.0588</strong></td><td><strong>0.6810</strong></td></tr>
-          <tr><td>Línea base: 2021</td><td>0.0900</td><td>0.1143</td><td>-0.2042</td></tr>
+          <tr><td><strong>Gradient Boosting + contexto espacial</strong></td><td><strong>0.0323</strong></td><td><strong>0.0473</strong></td><td><strong>0.7840</strong></td></tr>
+          <tr><td>Gradient Boosting histórico</td><td>0.0335</td><td>0.0492</td><td>0.7660</td></tr>
+          <tr><td>Línea base: 2021</td><td>0.0974</td><td>0.1173</td><td>-0.3365</td></tr>
         </tbody>
       </table>
-      <p class="note">En prueba, el error absoluto medio se redujo aproximadamente 54.2% respecto a usar directamente la abstención de 2021.</p>
+      <p class="note">El error absoluto medio se redujo aproximadamente 66.9% respecto a usar directamente la abstención de 2021. El contexto espacial aporta una mejora adicional frente al modelo solo histórico.</p>
       <h3>Variables utilizadas</h3>
-      <p class="note">Para cada sección se incorporan abstención y participación, proporción NS, tamaño de lista nominal, composición de edad (18–29, 30–59, 60+), composición por sexo y tipo de sección de 2009, 2012, 2015, 2018 y 2021.</p>
+      <p class="note">Para cada sección se incorporan abstención y participación, proporción NS, tamaño de lista nominal, composición de edad (18–29, 30–59, 60+), composición por sexo y tipo de sección de 2009, 2012, 2015, 2018 y 2021. Se añaden promedios y desviaciones municipales/estatales de 2021, tendencias 2018–2021, volatilidad, crecimiento de la lista nominal y posición relativa dentro de la entidad (92 variables en total).</p>
     </section>
   </div>
 
@@ -141,12 +143,12 @@
     <table>
       <thead><tr><th>Entidad</th><th>Riesgo promedio</th><th>Secciones alto/muy alto</th><th>Abstención esperada</th></tr></thead>
       <tbody>
-        <tr><td>Baja California</td><td>49.28%</td><td>975</td><td>1,567,013</td></tr>
-        <tr><td>Chihuahua</td><td>46.70%</td><td>1,098</td><td>1,387,801</td></tr>
-        <tr><td>Durango</td><td>46.12%</td><td>393</td><td>650,213</td></tr>
-        <tr><td>Guanajuato</td><td>46.10%</td><td>1,088</td><td>2,267,545</td></tr>
-        <tr><td>Sonora</td><td>45.94%</td><td>494</td><td>1,061,628</td></tr>
-        <tr><td>Quintana Roo</td><td>45.81%</td><td>318</td><td>668,873</td></tr>
+        <tr><td>Baja California</td><td>51.66%</td><td>1,369</td><td>1,650,774</td></tr>
+        <tr><td>Sonora</td><td>47.29%</td><td>629</td><td>1,101,177</td></tr>
+        <tr><td>Chihuahua</td><td>46.75%</td><td>1,168</td><td>1,396,526</td></tr>
+        <tr><td>Durango</td><td>45.52%</td><td>352</td><td>641,854</td></tr>
+        <tr><td>Baja California Sur</td><td>45.21%</td><td>155</td><td>285,305</td></tr>
+        <tr><td>Michoacán</td><td>44.91%</td><td>745</td><td>1,675,805</td></tr>
       </tbody>
     </table>
     <p class="note">El ranking muestra riesgo promedio; la prioridad operativa también debe considerar el tamaño de la lista nominal y la capacidad local de intervención.</p>
@@ -155,19 +157,20 @@
   <div class="grid two">
     <section>
       <h2>Escenarios de acción</h2>
-      <div class="card scenario"><h3>Sin intervención</h3><div class="metric">39.29%</div><div class="label">abstención promedio · 0 personas movilizadas</div></div>
-      <div class="card scenario x1"><h3>X1 · Acción informativa</h3><div class="metric">38.93%*</div><div class="label">reducción hipotética de 3 puntos en zonas alto/muy alto · 409,255 personas potencialmente movilizables</div></div>
+      <div class="card scenario"><h3>Sin intervención</h3><div class="metric">39.35%</div><div class="label">abstención promedio · 0 personas movilizadas</div></div>
+      <div class="card scenario x1"><h3>X1 · Acción informativa</h3><div class="metric">38.93%*</div><div class="label">reducción hipotética de 3 puntos en zonas alto/muy alto · 477,315 personas potencialmente movilizables</div></div>
       <div class="human-action"><strong>En palabras sencillas:</strong> acercar información clara y neutral a la comunidad: recordar cuándo y dónde votar, explicar cómo ubicar la casilla y resolver dudas mediante mensajes, materiales impresos y difusión local.</div>
-      <div class="card scenario x2"><h3>X2 · Acción intensiva</h3><div class="metric">38.44%*</div><div class="label">reducción hipotética de 7 puntos en zonas alto/muy alto · 954,928 personas potencialmente movilizables</div></div>
+      <div class="card scenario x2"><h3>X2 · Acción intensiva</h3><div class="metric">38.37%*</div><div class="label">reducción hipotética de 7 puntos en zonas alto/muy alto · 1,113,735 personas potencialmente movilizables</div></div>
       <div class="human-action"><strong>En palabras sencillas:</strong> hacer un acompañamiento territorial más cercano: combinar información focalizada, visitas comunitarias, módulos de orientación y seguimiento de las dudas o barreras que dificultan acudir a votar.</div>
       <p class="note">*Promedios del modelo posterior a la intervención hipotética, no resultados causales observados.</p>
     </section>
     <section>
       <h2>Lectura ejecutiva</h2>
       <ul>
-        <li>La mayoría de las secciones queda en nivel medio (37,433; 54.6%).</li>
-        <li>Las zonas alto/muy alto concentran 13.64 millones de registros de lista nominal y son el foco de los escenarios.</li>
-        <li>El modelo histórico aporta señal territorial adicional frente a la línea base 2021, pero no sustituye el diagnóstico local.</li>
+        <li>La mayoría de las secciones queda en nivel medio (36,031; 52.5%).</li>
+        <li>Las zonas alto/muy alto concentran 15.91 millones de registros de lista nominal y son el foco de los escenarios.</li>
+        <li>El contexto espacial mejora la generalización territorial frente al modelo solo histórico y frente a la línea base 2021, pero no sustituye el diagnóstico local.</li>
+        <li>2,100 secciones (1.59 millones de registros) no tienen tasa 2024 válida y se reportan como «Sin dato»; no se eliminan del entregable.</li>
         <li>Las acciones deben diseñarse y evaluarse con medición real; X1 y X2 son sensibilidad, no promesas de impacto.</li>
       </ul>
     </section>
@@ -182,8 +185,9 @@
   </section>
 
   <footer>
-    Fuente: INE, Datos Abiertos, Conteos Censales de Participación (AELEC), elecciones 2009–2024.
-    Cálculos reproducibles en <code>notebooks/modelo_riesgo.ipynb</code>; resultados tabulares en
+    Fuente: INE, Datos Abiertos, Conteos Censales de Participación (AELEC), elecciones 2009–2024;
+    eventos y gastos de campaña del Sistema Integral de Fiscalización (SIF).
+    Cálculos reproducibles en <code>src/entrenar_modelo.py</code>; resultados tabulares en
     <code>resultado_modelo_riesgo_2024.csv</code> y <code>escenarios_modelo_riesgo_2024.csv</code>.
   </footer>
 </main>
