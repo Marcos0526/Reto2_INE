@@ -1,0 +1,99 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{top=2.5cm,bottom=2.5cm,left=3cm,right=3cm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{Reporte Metodológico y Preventivo\\Reto 2 INE — Índice Territorial de Riesgo de Abstención}
+\author{José Ramón García González \and Marcos Bautista Muñua \and Erick Michel Meza Mendoza \and Angel Ainar Lazcano Sanchez}
+\date{31 de octubre de 2026}
+
+\begin{document}
+\maketitle
+
+\section{Marco metodológico}
+El proyecto construye un índice territorial de riesgo de abstención por sección electoral a partir de Conteos Censales de Participación del INE 2009-2024. El modelo combina historia electoral de cada sección con variables sociodemográficas y contexto espacial municipal y estatal. El objetivo es identificar zonas con mayor propensión a la abstención y priorizar intervenciones preventivas.
+
+\begin{itemize}
+\item Modelo final: HistGradientBoostingRegressor con 92 variables.
+\item Objetivo transformado con logit; predicción inversa a probabilidad.
+\item Validación por municipio con GroupShuffleSplit, 80/20, tres semillas.
+\end{itemize}
+
+\section{Fuentes de datos}
+\begin{itemize}
+\item Conteos Censales de Participación 2009, 2012, 2015, 2018, 2021, 2024. 70,751 secciones en 2024; 68,651 con tasa válida.
+\item Manual metodológico 2009-2024.
+\item Sistema Integral de Fiscalización para eventos y gastos de campaña, procesado pero no incluido en modelo final.
+\end{itemize}
+
+Secciones sin dato 2024: 2,100 secciones, 1.59 millones de lista nominal, concentradas en Sinaloa, Chihuahua, Coahuila, Michoacán y Sonora.
+
+\section{Variables utilizadas}
+El modelo final usa 92 variables:
+\begin{enumerate}
+\item Historia electoral 50 variables: abstención, participación, proporción NS, lista nominal, composición por edad y sexo para cada elección 2009-2021.
+\item Tipo de sección 5 variables: TIPOSEC por año.
+\item Faltantes explícitos 8 variables: número de años con historia, bandera de historia completa, bandera de 2021 y bandera por año faltante.
+\item Contexto espacial 28 variables: promedios, desviaciones y promedios leave-one-out municipal y estatal de abstención/participación 2021; desviación sección respecto a municipio; tendencia 2018-2021 sección, municipio y entidad; volatilidad histórica; crecimiento lista nominal; rango municipio dentro de entidad; composición sociodemográfica municipal y número de secciones del municipio.
+\item Entidad federativa codificada como categórica.
+\end{enumerate}
+
+\section{Validación temporal y territorial}
+Validación territorial: GroupShuffleSplit por municipio, MAE 0.0323 $\pm$0.0018, R$^2$ 0.784 $\pm$0.011. Reducción MAE frente a línea base 2021 $\approx$66.9\%.
+
+Validación temporal: entrenar hasta 2018, predecir 2021. MAE 0.0721 frente a línea base 0.1001, mejora 27.9\%. El error aumenta por cambio de año y contexto COVID-19.
+
+Intervalos de incertidumbre: gradient boosting cuantílico 0.10 y 0.90 con calibración conformal. Cobertura empírica 80.0\%, ancho medio 10.1 puntos porcentuales.
+
+\section{Métricas de error}
+\begin{itemize}
+\item MAE validación territorial: 0.0323 $\pm$0.0018
+\item RMSE: 0.0473 $\pm$0.0023
+\item R$^2$: 0.784 $\pm$0.011
+\item MAE validación temporal: 0.0721
+\item Cobertura intervalo 80\%: 80.0\%
+\end{itemize}
+
+Secciones sin dato: correlación Spearman ranking simple vs ponderado 0.985; Sinaloa puede moverse del lugar 4 al 12 según tratamiento.
+
+\section{Semáforo de riesgo territorial}
+Clasificación del índice:
+\begin{itemize}
+\item Bajo $<35$: 22,979 secciones, riesgo medio 28.86\%
+\item Medio 35-50: 36,031 secciones, riesgo medio 41.92\%
+\item Alto 50-65: 9,344 secciones, riesgo medio 54.31\%
+\item Muy alto $>65$: 297 secciones, riesgo medio 69.17\%
+\end{itemize}
+
+Entidades con mayor riesgo promedio: Baja California 51.66\%, Sonora 47.29\%, Chihuahua 46.75\%, Durango 45.52\%, Baja California Sur 45.21\%, Michoacán 44.91\%.
+
+\section{Análisis de secciones sin dato}
+2,100 secciones sin tasa 2024. Efecto en ranking evaluado con tres sensibilidades: promedio simple, ponderado por lista nominal, cotas 0\% y 100\%. Ranking estable en cima pero Sinaloa y Chihuahua sensibles. Se reportan alertas de cobertura por entidad y municipio.
+
+\section{Escenarios de intervención}
+Escenarios de sensibilidad, no causales:
+\begin{itemize}
+\item X1 informativa: reducción hipotética 3 puntos en secciones alto/muy alto. Personas potencialmente movilizables 477,315. Abstención promedio 38.93\%.
+\item X2 intensiva: reducción hipotética 7 puntos en secciones alto/muy alto. Personas potencialmente movilizables 1,113,735. Abstención promedio 38.37\%.
+\end{itemize}
+Sin intervención: abstención promedio 39.35\%.
+
+Las 2,100 secciones sin dato quedan fuera del escenario base. Cotas superiores con imputación completa: X1 máximo 524,974; X2 máximo 1,224,940.
+
+\section{Recomendaciones preventivas y de priorización}
+\begin{enumerate}
+\item Priorizar las 9,641 secciones alto/muy alto, comenzando por mayor lista nominal y cobertura de datos suficiente.
+\item Usar X1 informativa donde la barrera principal sea informativa: horarios, ubicación casillas, requisitos, difusión local.
+\item Reservar X2 intensiva para riesgo muy alto con barreras de acceso, movilidad o seguimiento comunitario.
+\item Revisar primero Sinaloa, Chihuahua y Coahuila por secciones sin dato $>$5\% de lista nominal.
+\item Medir antes y después con grupo de comparación; sin medición real, X1 y X2 son escenarios de sensibilidad.
+\item Actualizar modelo con 2024 antes de usar para 2027; versión actual es nowcast territorial de 2024.
+\end{enumerate}
+
+\section{Limitaciones}
+No es modelo causal, territorial no individual, nowcast 2024, cambios cartográficos sin tabla de equivalencias, secciones sin dato, NS no es abstención, campañas auto-reportadas, una familia de modelos, validación temporal limitada a 2021, intervalos predictivos no causales, historia incompleta en 20.3\% de secciones.
+
+\end{document}

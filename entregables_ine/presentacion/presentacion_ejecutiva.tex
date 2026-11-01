@@ -1,0 +1,110 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\title{Reto 2 INE — Índice Territorial de Riesgo de Abstención}
+\subtitle{Índice de riesgo de abstención por sección electoral}
+\author{José Ramón García González \and Marcos Bautista Muñua \and Erick Michel Meza Mendoza \and Angel Ainar Lazcano Sanchez}
+\institute{INE}
+\date{31 de octubre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Resumen ejecutivo}
+\begin{itemize}
+\item 70,751 secciones electorales en 2024; 68,651 con tasa válida.
+\item Modelo HistGradientBoosting con historia electoral 2009-2021 y contexto espacial municipal/estatal.
+\item MAE validación territorial: 0.0323 $\pm$ 0.0018; R$^2$ = 0.784 $\pm$ 0.011.
+\item Reducción del MAE frente a línea base 2021: $\approx$66.9\%.
+\item 9,641 secciones en riesgo alto o muy alto.
+\item Personas potencialmente movilizables: X1 = 477,315; X2 = 1,113,735.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Preguntas de investigación}
+\begin{enumerate}
+\item ¿Qué zonas presentan mayor abstención en 2024 y qué información ayuda a priorizar?
+\item ¿Qué variables históricas, sociodemográficas y territoriales explican la abstención?
+\item ¿Cuántas personas podrían movilizarse con acciones X1 e X2 y dónde priorizar?
+\end{enumerate}
+Alcance: pronóstico retrospectivo \textit{nowcast} con información hasta 2021 para calibrar 2024.
+\end{frame}
+
+\begin{frame}{Metodología del modelo}
+\begin{itemize}
+\item 92 variables: historia electoral 50, tipo de sección 5, faltantes 8, contexto espacial 28, entidad.
+\item Objetivo transformado con logit; predicción inversa a probabilidad.
+\item HistGradientBoostingRegressor: max\_iter=300, learning\_rate=0.04, max\_leaf\_nodes=15, min\_samples\_leaf=40.
+\item Validación GroupShuffleSplit por municipio, 80/20, 3 semillas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Validación y robustez}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{tabular}{lc}
+\toprule
+Validación & MAE \\
+\midrule
+Territorial 2024 & 0.0323 \\
+Temporal 2018$\rightarrow$2021 & 0.0721 \\
+Línea base 2021 & 0.0974 \\
+\bottomrule
+\end{tabular}
+\column{0.5\textwidth}
+\begin{itemize}
+\item Cobertura intervalo 80\%: 80.0\%, ancho medio 10.1 pp.
+\item Correlación ranking simple/ponderado: 0.985.
+\item Error según historia: completa 0.0289, parcial 0.0361, sin 2021 0.0709.
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Distribución del riesgo territorial}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Nivel & Secciones & Lista nominal & Riesgo medio \\
+\midrule
+Bajo & 22,979 & 29,014,613 & 28.86\% \\
+Medio & 36,031 & 51,816,586 & 41.92\% \\
+Alto & 9,344 & 15,422,746 & 54.31\% \\
+Muy alto & 297 & 487,761 & 69.17\% \\
+Sin dato & 2,100 & 1,588,642 & — \\
+\bottomrule
+\end{tabular}
+\end{center}
+Entidades con mayor riesgo promedio: Baja California, Sonora, Chihuahua, Durango, BCS, Michoacán.
+\end{frame}
+
+\begin{frame}{Escenarios de intervención}
+\begin{itemize}
+\item X1 informativa: -3 puntos en alto/muy alto $\rightarrow$ 477,315 personas.
+\item X2 intensiva: -7 puntos en alto/muy alto $\rightarrow$ 1,113,735 personas.
+\item Abstención promedio: sin intervención 39.35\%, X1 38.93\%, X2 38.37\%.
+\end{itemize}
+Los escenarios son análisis de sensibilidad, no efectos causales.
+\end{frame}
+
+\begin{frame}{Recomendaciones preventivas}
+\begin{enumerate}
+\item Priorizar 9,641 secciones alto/muy alto por lista nominal y cobertura.
+\item X1 donde la barrera sea informativa; X2 para riesgo muy alto con barreras de acceso.
+\item Revisar Sinaloa, Chihuahua, Coahuila por secciones sin dato $>$5\% de lista nominal.
+\item Medir antes/después con grupo de comparación.
+\item Actualizar modelo con 2024 antes de proyección 2027.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+\begin{itemize}
+\item Modelo territorial robusto con contexto espacial; supera línea base en 66.9\%.
+\item Validación temporal confirma generalización moderada a otro año.
+\item Índice permite priorizar recursos con intervalos de incertidumbre explícitos.
+\item Limitaciones: no causal, territorial, ahora 2024, secciones sin dato.
+\end{itemize}
+\end{frame}
+
+\end{document}
